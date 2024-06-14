@@ -112,7 +112,6 @@ describe("This is my PET positive test cases ", () => {
         expect(responseData.photoUrls[0]).to.be.a("string");
       } else {
         // Handle the case when photoUrls is empty or undefined
-        // For example, you can skip this assertion or log a message
         cy.log("PhotoUrls property is empty or undefined");
       }
       // Assert the structure of the tags array
@@ -150,7 +149,6 @@ describe("This is my PET positive test cases ", () => {
       }
       responseData = response.body;
       expect(response.status).to.equal(200);
-      // Assert the structure of the response body
       expect(responseData).to.be.an("object");
       // Assert the properties of the pet object
       expect(responseData).to.have.property("id").that.is.a("number");

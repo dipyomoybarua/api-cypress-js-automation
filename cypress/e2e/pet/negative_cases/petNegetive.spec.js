@@ -15,7 +15,7 @@ describe("This is my PET negative test cases ", () => {
   beforeEach(() => {
     // Create a new pet before each test
     cy.createNewInvalidPet().then((response) => {
-      petId = response.body.id; // Store the pet ID
+      petId = response.body.id; 
     });
   });
 

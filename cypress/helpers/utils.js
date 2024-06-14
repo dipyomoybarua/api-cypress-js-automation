@@ -80,7 +80,7 @@ export function generateRandomUrl() {
   
   export function generateUserStatus() {
     
-    const statuses = [0, 1, 2]; // You can adjust this array with your specific status values
+    const statuses = [0, 1, 2]; // Adjust this array with your specific status values
   
     // Generate a random index to select a status from the array
     const randomIndex = Math.floor(Math.random() * statuses.length);

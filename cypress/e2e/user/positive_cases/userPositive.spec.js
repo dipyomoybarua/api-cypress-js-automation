@@ -140,8 +140,7 @@ describe("This is my user positive test cases ", () => {
     cy.request({
       method: "DELETE",
       url: url + `user/${username}`,
-      headers: validHeadder,
-      //   body: updateUserBody,
+      headers: validHeadder
     }).then((response) => {
       if (response.status !== 200) {
         // Handle unexpected status code

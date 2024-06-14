@@ -72,7 +72,6 @@ import {
     cy.request({
       method: "POST",
       url: `v2/url`,
-      // headers: invalidHeadder,
       body: invalidBody,
       failOnStatusCode: false,
     }).then((response) => {

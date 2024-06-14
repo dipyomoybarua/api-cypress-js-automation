@@ -4,34 +4,34 @@
     "description": "API tests, using Cypress for Swagger Petstore Sample",
     "main": "index.js",
     "scripts": {
-      "tests": "npm run cy:run || npm run aftertest",
-      "beforetest": "npm run clean:folders",
-      "aftertest": "npm run allure:report",
-      "allure:clear": "if exist allure  -results rmdir /q /s allure-results && if exist allure-report rmdir /q /s allure-report && if exist cypress\\screenshots rmdir /q /s cypress\\screenshots && if exist cypress\\videos rmdir /q /s cypress\\videos", 
-      "cy:run": "npx cypress run --env allure=true",
-      "allure:report": "allure generate allure-results --clean -o allure-report",
-      "pretest": "npm run allure:clear",
-      "Alluretest": "npm run cy:run || npm run posttest",
-      "posttest": "npm run allure:report",
-      "upload": "allure report --upload-dir=allure-results"
+        "tests": "npm run cy:run || npm run aftertest",
+        "beforetest": "npm run clean:folders",
+        "aftertest": "npm run allure:report",
+        "allure:clear": "if exist allure  -results rmdir /q /s allure-results && if exist allure-report rmdir /q /s allure-report && if exist cypress\\screenshots rmdir /q /s cypress\\screenshots && if exist cypress\\videos rmdir /q /s cypress\\videos",
+        "cy:run": "npx cypress run --env allure=true",
+        "allure:report": "allure generate allure-results --clean -o allure-report",
+        "pretest": "npm run allure:clear",
+        "Alluretest": "npm run cy:run || npm run posttest",
+        "posttest": "npm run allure:report",
+        "upload": "allure report --upload-dir=allure-results"
     },
     "keywords": [],
     "author": "Dipyomoy Barua",
     "license": "ISC",
     "devDependencies": {
-      "@shelex/cypress-allure-plugin": "^2.40.1",
-      "allure-commandline": "^2.27.0",
-      "cypress": "^13.6.4",
-      "cypress-downloadfile": "^1.2.3",
-      "cypress-image-snapshot": "^4.0.1",
-      "mocha-allure-reporter": "^1.4.0",
-      "sharp": "^0.33.2"
+        "@shelex/cypress-allure-plugin": "^2.40.1",
+        "allure-commandline": "^2.27.0",
+        "cypress": "^13.6.4",
+        "cypress-downloadfile": "^1.2.3",
+        "cypress-image-snapshot": "^4.0.1",
+        "mocha-allure-reporter": "^1.4.0",
+        "sharp": "^0.33.2"
     },
     "dependencies": {
-      "axios": "^1.6.7",
-      "canvas": "^2.11.2",
-      "node-fetch": "^3.3.2",
-      "pixelmatch": "^5.3.0"
+        "axios": "^1.6.7",
+        "canvas": "^2.11.2",
+        "node-fetch": "^3.3.2",
+        "pixelmatch": "^5.3.0",
+        "selenium-webdriver": "^4.21.0"
     }
-  }
-  
+}

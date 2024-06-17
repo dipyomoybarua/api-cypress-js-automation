@@ -4,14 +4,14 @@ import {
   constructNewPetRequestBody,
   constructPetRequest,
 } from "../../../support/requestBody";
-import { getRandomStatus } from "../../../helpers/utils";
+// import { getRandomStatus } from "../../../helpers/utils";
 import "../../../support/commands";
 describe("This is my PET positive test cases ", () => {
   const validHeadder = Cypress.config("validCommonHeaders");
   const url = Cypress.config("baseUrl");
   const petRequestBody = constructNewPetRequestBody();
   const petRequest = constructPetRequest();
-  const status = getRandomStatus();
+  const status = constructNewPetRequestBody();
   let responseData, petId;
 
   beforeEach(() => {
@@ -71,7 +71,7 @@ describe("This is my PET positive test cases ", () => {
   it("Finds Pets by status", () => {
     cy.request({
       method: "GET",
-      url: `findByStatus?status=${status}`,
+      url: `findByStatus?status=${petRequest.status}`,
       headers: validHeadder,
     }).then((response) => {
       if (response.status !== 200) {
@@ -86,10 +86,7 @@ describe("This is my PET positive test cases ", () => {
       // Assert properties of the pet object
       expect(responseData).to.have.property("id").that.is.a("number");
       expect(responseData).to.have.property("name").that.is.a("string");
-      expect(responseData)
-        .to.have.property("status")
-        .that.is.a("string")
-        .and.oneOf(["available", "pending", "sold"]);
+      expect(responseData).to.have.property("status").that.is.a("string").and.oneOf(["available", "pending", "sold"]);
       if (responseData.category) {
         expect(responseData.category)
           .to.have.property("id")

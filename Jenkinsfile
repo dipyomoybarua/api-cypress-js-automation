@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         CYPRESS_RECORD_KEY = 'ku86j9'
-        PATH = "$PATH:/path/to/git/bin/git.exe" 
+        PATH = "C:\\Program Files\\Git\\bin\\git.exe" 
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         stage('Run Tests in Parallel') {
@@ -30,7 +30,7 @@ pipeline {
                         def instance = i
                         instances["Cypress Instance ${instance}"] = {
                             withEnv(cypressEnv) {
-                                sh "npx cypress run --record --parallel --group ${instance}"
+                                bat "npx cypress run --record --parallel --group ${instance}"
                             }
                         }
                     }

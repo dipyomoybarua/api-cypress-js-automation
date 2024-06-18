@@ -14,7 +14,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // bat 'npm install --legacy-peer-deps'
-                 bat 'yarn install'
+                 bat 'npm  install'
             }
         }
         stage('Run Tests in Parallel') {

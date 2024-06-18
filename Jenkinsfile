@@ -13,19 +13,14 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // Clean up previous node_modules to avoid conflicts
-                bat 'rmdir /s /q node_modules'
-
-                // Choose one of the following approaches:
-
-                // Option 1: Force install dependencies (may lead to unexpected behavior)
-                bat 'npm install --force'
-
-                // OR Option 2: Use legacy peer dependencies (may ignore peer dependency warnings)
-                // bat 'npm install --legacy-peer-deps'
-
-                // OR Option 3: Explicitly install specific versions (if you know compatible versions)
-                // bat 'npm install cypress@13.6.4 cypress-image-snapshot@4.0.1'
+                script {
+                    // Check if node_modules exists before attempting to delete it
+                    def nodeModulesDir = new File("${env.WORKSPACE}/node_modules")
+                    if (nodeModulesDir.exists()) {
+                        bat "rmdir /s /q node_modules"
+                    }
+                    bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
+                }
             }
         }
         stage('Run Tests in Parallel') {

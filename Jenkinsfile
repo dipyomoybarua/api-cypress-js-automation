@@ -11,18 +11,11 @@ pipeline {
                 git credentialsId: 'github-credentials', url: 'https://github.com/dipyomoybarua/api-cypress-js-automation'
             }
         }
-
         stage('Install Dependencies') {
             steps {
-                // Clean up node_modules if it exists
-                bat 'rmdir /s /q node_modules || exit 0'
-
-                // Install dependencies with --force to resolve dependency conflicts
-                bat 'npm cache clean --force'
                 bat 'npm install --force cypress-image-snapshot@4.0.1 cypress@13.6.4'
             }
         }
-
         stage('Run Tests in Parallel') {
             steps {
                 script {
@@ -30,8 +23,8 @@ pipeline {
                         "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}"
                     ]
                     def parallelism = 3
-                    def instances = []
-                    def ciBuildId = UUID.randomUUID().toString() // Generate a unique build ID
+                    def instances = [:]
+                    def ciBuildId = UUID.randomUUID().toString()
 
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i

@@ -13,8 +13,11 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // bat 'npm install --legacy-peer-deps'
-                 bat 'npm  install'
+                // Clean up previous node_modules to avoid conflicts
+                bat 'rmdir /s /q node_modules'
+
+                // Install specific versions of cypress-image-snapshot and cypress
+                bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
             }
         }
         stage('Run Tests in Parallel') {

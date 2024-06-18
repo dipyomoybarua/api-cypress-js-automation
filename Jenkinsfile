@@ -13,8 +13,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // Use `bat` instead of `sh` for Windows batch commands
-                bat 'npm install'
+                bat 'npm install --legacy-peer-deps'
             }
         }
         stage('Run Tests in Parallel') {

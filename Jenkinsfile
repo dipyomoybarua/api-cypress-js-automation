@@ -11,17 +11,18 @@ pipeline {
                 git credentialsId: 'github-credentials', url: 'https://github.com/dipyomoybarua/api-cypress-js-automation'
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                script {
-                    // Remove node_modules directory if it exists
-                    bat 'rmdir /s /q node_modules || exit 0'
+                // Clean up node_modules if it exists
+                bat 'rmdir /s /q node_modules || exit 0'
 
-                    // Install specific versions of cypress-image-snapshot and cypress
-                    bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
-                }
+                // Install dependencies with --force to resolve dependency conflicts
+                bat 'npm cache clean --force'
+                bat 'npm install --force cypress-image-snapshot@4.0.1 cypress@13.6.4'
             }
         }
+
         stage('Run Tests in Parallel') {
             steps {
                 script {

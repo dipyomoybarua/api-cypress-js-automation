@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        CYPRESS_RECORD_KEY = '<ku86j9>'
+        CYPRESS_RECORD_KEY = '8212dd2f-1031-4d21-9883-c00f65004442'
     }
 
     stages {

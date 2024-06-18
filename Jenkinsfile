@@ -16,8 +16,16 @@ pipeline {
                 // Clean up previous node_modules to avoid conflicts
                 bat 'rmdir /s /q node_modules'
 
-                // Install specific versions of cypress-image-snapshot and cypress
-                bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
+                // Choose one of the following approaches:
+
+                // Option 1: Force install dependencies (may lead to unexpected behavior)
+                bat 'npm install --force'
+
+                // OR Option 2: Use legacy peer dependencies (may ignore peer dependency warnings)
+                // bat 'npm install --legacy-peer-deps'
+
+                // OR Option 3: Explicitly install specific versions (if you know compatible versions)
+                // bat 'npm install cypress@13.6.4 cypress-image-snapshot@4.0.1'
             }
         }
         stage('Run Tests in Parallel') {
@@ -27,11 +35,11 @@ pipeline {
                         "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}"
                     ]
                     def parallelism = 3
-                    def instances = [:]  // Use a map instead of a list
+                    def instances = []
+                    def ciBuildId = UUID.randomUUID().toString() // Generate a unique build ID
 
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i
-                        def ciBuildId = UUID.randomUUID().toString()  // Generate a unique build ID for each instance
                         instances["Cypress Instance ${instance}"] = {
                             withEnv(cypressEnv + ["CYPRESS_CI_BUILD_ID=${ciBuildId}"]) {
                                 bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"

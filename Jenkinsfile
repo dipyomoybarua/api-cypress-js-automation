@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         CYPRESS_RECORD_KEY = 'ku86j9'
-        PATH = "C:\\Program Files\\Git\\bin\\git.exe" 
     }
 
     stages {
@@ -14,6 +13,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
+                // Use `bat` instead of `sh` for Windows batch commands
                 bat 'npm install'
             }
         }
@@ -42,6 +42,7 @@ pipeline {
 
     post {
         success {
+            archiveArtifacts artifacts: 'target/**', followSymlinks: false
             echo 'Pipeline completed successfully.'
         }
         failure {

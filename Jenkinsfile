@@ -13,11 +13,13 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // Clean up previous node_modules to avoid conflicts
-                bat 'rmdir /s /q node_modules'
+                script {
+                    // Remove node_modules directory if it exists
+                    bat 'rmdir /s /q node_modules || exit 0'
 
-                // Install specific versions of cypress-image-snapshot and cypress
-                bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
+                    // Install specific versions of cypress-image-snapshot and cypress
+                    bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
+                }
             }
         }
         stage('Run Tests in Parallel') {

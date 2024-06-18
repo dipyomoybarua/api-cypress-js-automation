@@ -15,10 +15,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Clean node_modules and reinstall dependencies
-                    bat 'rmdir /s /q node_modules || exit 0'
-                    bat 'npm cache clean --force'
-                    bat 'npm install --force cypress-image-snapshot@4.0.1 cypress@13.6.4'
+                    bat 'rmdir /s /q node_modules || exit 0'  // Clean node_modules if exists
+                    bat 'npm cache clean --force'             // Clean npm cache
+                    bat 'npm install --force cypress-image-snapshot@4.0.1 cypress@13.6.4' // Install dependencies
                 }
             }
         }
@@ -33,13 +32,10 @@ pipeline {
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i
                         instances["Cypress Instance ${instance}"] = {
-                            // Define environment variables for this instance
                             def cypressEnv = [
                                 CYPRESS_RECORD_KEY: "${env.CYPRESS_RECORD_KEY}",
                                 CYPRESS_CI_BUILD_ID: ciBuildId
                             ]
-                            
-                            // Run Cypress tests in parallel
                             bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
                         }
                     }

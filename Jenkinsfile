@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Add your environment variables here if needed
-        CYPRESS_RECORD_KEY = 'ku86j9'
+        CYPRESS_RECORD_KEY = ''
     }
 
     stages {

@@ -13,14 +13,11 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                script {
-                    // Check if node_modules exists before attempting to delete it
-                    def nodeModulesDir = new File("${env.WORKSPACE}/node_modules")
-                    if (nodeModulesDir.exists()) {
-                        bat "rmdir /s /q node_modules"
-                    }
-                    bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
-                }
+                // Clean up previous node_modules to avoid conflicts
+                bat 'rmdir /s /q node_modules'
+
+                // Install specific versions of cypress-image-snapshot and cypress
+                bat 'npm install cypress-image-snapshot@4.0.1 cypress@^13.6.4'
             }
         }
         stage('Run Tests in Parallel') {

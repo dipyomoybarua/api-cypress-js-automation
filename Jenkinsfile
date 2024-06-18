@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         CYPRESS_RECORD_KEY = 'ku86j9'
-        PATH = "$PATH:/path/to/git/bin" 
+        PATH = "$PATH:/path/to/git/bin/git.exe" 
     }
 
     stages {

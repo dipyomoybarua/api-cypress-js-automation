@@ -15,13 +15,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Clean npm cache and force install Cypress and cypress-image-snapshot
+                    // Clean node_modules and reinstall dependencies
+                    bat 'rmdir /s /q node_modules || exit 0'
                     bat 'npm cache clean --force'
-                    bat 'npm install --force cypress@13.6.4 cypress-image-snapshot@4.0.1'
+                    bat 'npm install --force cypress-image-snapshot@4.0.1 cypress@13.6.4'
                 }
             }
         }
-
+        
         stage('Run Tests in Parallel') {
             steps {
                 script {
@@ -32,12 +33,16 @@ pipeline {
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i
                         instances["Cypress Instance ${instance}"] = {
-                            withEnv(["CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY}", "CYPRESS_CI_BUILD_ID=${ciBuildId}"]) {
-                                bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
-                            }
+                            // Define environment variables for this instance
+                            def cypressEnv = [
+                                CYPRESS_RECORD_KEY: "${env.CYPRESS_RECORD_KEY}",
+                                CYPRESS_CI_BUILD_ID: ciBuildId
+                            ]
+                            
+                            // Run Cypress tests in parallel
+                            bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
                         }
                     }
-
                     parallel instances
                 }
             }
@@ -53,4 +58,5 @@ pipeline {
             echo 'Pipeline failed.'
         }
     }
+
 }

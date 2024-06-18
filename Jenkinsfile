@@ -41,7 +41,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'target/**', followSymlinks: false
+            archiveArtifacts artifacts: '**', followSymlinks: false
             echo 'Pipeline completed successfully.'
         }
         failure {

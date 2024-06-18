@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        CYPRESS_RECORD_KEY = 'CYPRESS_RECORD_KEY'
+        CYPRESS_RECORD_KEY = '8212dd2f-1031-4d21-9883-c00f65004442'
     }
 
     stages {
@@ -23,13 +23,14 @@ pipeline {
                         "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}"
                     ]
                     def parallelism = 3
-                    def instances = [:]
+                    def instances = []
+                    def ciBuildId = UUID.randomUUID().toString() // Generate a unique build ID
 
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i
                         instances["Cypress Instance ${instance}"] = {
-                            withEnv(cypressEnv) {
-                                bat "npx cypress run --record --parallel --group ${instance}"
+                            withEnv(cypressEnv + ["CYPRESS_CI_BUILD_ID=${ciBuildId}"]) {
+                                bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
                             }
                         }
                     }

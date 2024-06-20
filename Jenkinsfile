@@ -24,7 +24,7 @@ pipeline {
                     // Use withCredentials to retrieve and mask credentials.
                     withCredentials([string(credentialsId: 'cypress-record-key', variable: 'CYPRESS_RECORD_KEY'),
                                      string(credentialsId: 'cypress-project-id', variable: 'CYPRESS_PROJECT_ID')]) {
-                        def parallelism = 4
+                        def parallelism = 2
                         def instances = [:]
                         def ciBuildId = UUID.randomUUID().toString()
 

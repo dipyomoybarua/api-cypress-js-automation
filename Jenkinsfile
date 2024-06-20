@@ -20,9 +20,13 @@ pipeline {
         stage('Run Tests in Parallel') {
             steps {
                 script {
+                    // Echo the environment variables to verify they are being set correctly
+                    echo "CYPRESS_RECORD_KEY='${env.CYPRESS_RECORD_KEY}'"
+                    echo "CYPRESS_PROJECT_ID='${env.CYPRESS_PROJECT_ID}'"
+                    
                     def cypressEnv = [
-                        'CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}',
-                        'CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}'
+                        "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}",
+                        "CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}"
                     ]
                     def parallelism = 3
                     def instances = [:]

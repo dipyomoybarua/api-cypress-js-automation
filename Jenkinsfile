@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        CYPRESS_RECORD_KEY = credentials('cypress-record-key')
         CYPRESS_PROJECT_ID = credentials('cypress-project-id')
     }
 
@@ -19,6 +20,10 @@ pipeline {
         stage('Run Tests in Parallel') {
             steps {
                 script {
+                    def cypressEnv = [
+                        "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}",
+                        "CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}"
+                    ]
                     def parallelism = 3
                     def instances = [:]
                     def ciBuildId = UUID.randomUUID().toString()
@@ -26,14 +31,8 @@ pipeline {
                     for (int i = 1; i <= parallelism; i++) {
                         def instance = i
                         instances["Cypress Instance ${instance}"] = {
-                            withCredentials([string(credentialsId: 'cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
-                                withEnv([
-                                    "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}",
-                                    "CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}",
-                                    "CYPRESS_CI_BUILD_ID=${ciBuildId}"
-                                ]) {
-                                    bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
-                                }
+                            withEnv(cypressEnv + ["CYPRESS_CI_BUILD_ID=${ciBuildId}"]) {
+                                bat "npx cypress run --record --parallel --group ${instance} --ci-build-id ${ciBuildId}"
                             }
                         }
                     }

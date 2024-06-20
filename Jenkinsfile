@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        CYPRESS_RECORD_KEY = 'CYPRESS_RECORD_KEY' // give your record key as well
+        CYPRESS_RECORD_KEY = credentials('cypress-record-key')
     }
+
 
     stages {
         stage('Checkout') {

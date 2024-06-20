@@ -1,8 +1,8 @@
 const { defineConfig } = require("cypress");
 const allureWriter = require('@shelex/cypress-allure-plugin/writer');
-
+const projectId = process.env.CYPRESS_PROJECT_ID 
 module.exports = defineConfig({
-  projectId: "ku86j9", // give correct projectId when running the project
+  projectId: projectId, // give correct projectId when running the project
   viewportWidth: 1280,
   viewportHeight: 720,
   defaultCommandTimeout: 10000, 

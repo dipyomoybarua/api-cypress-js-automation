@@ -5,7 +5,6 @@ pipeline {
         CYPRESS_RECORD_KEY = credentials('cypress-record-key')
     }
 
-
     stages {
         stage('Checkout') {
             steps {

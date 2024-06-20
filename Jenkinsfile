@@ -25,9 +25,10 @@ pipeline {
                     echo "CYPRESS_PROJECT_ID='${env.CYPRESS_PROJECT_ID}'"
                     
                     def cypressEnv = [
-                        "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}",
-                        "CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}"
-                    ]
+                        'CYPRESS_RECORD_KEY=' + env.CYPRESS_RECORD_KEY,
+                        'CYPRESS_PROJECT_ID=' + env.CYPRESS_PROJECT_ID
+                        ]
+
                     def parallelism = 3
                     def instances = [:]
                     def ciBuildId = UUID.randomUUID().toString()

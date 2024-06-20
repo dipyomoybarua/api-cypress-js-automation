@@ -4,7 +4,6 @@ pipeline {
     environment {
         CYPRESS_RECORD_KEY = credentials('cypress-record-key')
         CYPRESS_PROJECT_ID = credentials('cypress-project-id')
-
     }
 
     stages {
@@ -22,9 +21,8 @@ pipeline {
             steps {
                 script {
                     def cypressEnv = [
-                        "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}"
+                        "CYPRESS_RECORD_KEY=${env.CYPRESS_RECORD_KEY}",
                         "CYPRESS_PROJECT_ID=${env.CYPRESS_PROJECT_ID}"
-
                     ]
                     def parallelism = 3
                     def instances = [:]

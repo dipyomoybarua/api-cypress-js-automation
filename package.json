@@ -22,7 +22,7 @@
         "@shelex/cypress-allure-plugin": "^2.40.1",
         "@types/faker": "^6.6.9",
         "allure-commandline": "^2.27.0",
-        "cypress": "^13.6.4",
+        "cypress": "^13.14.2",
         "cypress-downloadfile": "^1.2.3",
         "mocha-allure-reporter": "^1.4.0",
         "sharp": "^0.33.2"
